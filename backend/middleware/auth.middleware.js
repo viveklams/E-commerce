@@ -1,5 +1,5 @@
-import { jwt } from "jsonwebtoken";
-import User from "../models/user.model";
+import jwt from "jsonwebtoken";
+import User from "../models/user.model.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
@@ -35,5 +35,13 @@ export const protectRoute = async (req, res, next) => {
     return res
       .status(401)
       .json({ message: "Unathourized - Invalid access token" });
+  }
+};
+
+export const adminRoute = async (req, res, next) => {
+  if (req.user && req.user.role === "admin") {
+    next();
+  } else {
+    return res.status(401).json({ message: "Access denied - Admin Only" });
   }
 };
