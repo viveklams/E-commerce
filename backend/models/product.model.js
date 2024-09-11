@@ -27,7 +27,7 @@ const productSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    //this is for testing
+    //this is for testing for second time
   },
   { timestamps: true }
 );
