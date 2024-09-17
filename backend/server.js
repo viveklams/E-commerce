@@ -27,8 +27,8 @@ app.use(cookieParser());
 //routes
 app.use("/api/auth", authRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/cart", cartRoutes);
-app.use("/api/coupon", couponRoutes);
+app.use("/api/carts", cartRoutes);
+app.use("/api/coupons", couponRoutes);
 
 app.listen(PORT, () => {
   console.log("server is running on http://localhost:" + PORT);
