@@ -18,6 +18,7 @@ export const getCartProducts = async (req, res) => {
     res.status(500).json({ message: "Server Error", error: error.message });
   }
 };
+
 export const addToCart = async (req, res) => {
   try {
     const { productId, quantity } = req.body;
