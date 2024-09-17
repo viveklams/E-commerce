@@ -29,6 +29,7 @@ router.post("/create-checkout-session", protectRoute, async (req, res) => {
         },
       };
     });
+
     let coupon = null;
     if (couponCode) {
       coupon = await Coupon.findOne({
@@ -70,6 +71,18 @@ async function createStripeCoupon(discountPercentage) {
     duration_in_months: 1,
   });
   return coupon.id;
+}
+
+// create new coupon
+async function createNewCoupon(userId) {
+  const newCoupon = new Coupon({
+    code: "GIFT" + Math.random().toString(36).substring(2, 8).toUpperCase(),
+    discountPercentage: 10,
+    expirationDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days from now
+    userId: userId,
+  });
+
+  await newCoupon.save();
 }
 
 export default router;
