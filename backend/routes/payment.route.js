@@ -83,6 +83,8 @@ async function createNewCoupon(userId) {
   });
 
   await newCoupon.save();
+
+  return new coupon();
 }
 
 export default router;
