@@ -57,6 +57,11 @@ router.post("/create-checkout-session", protectRoute, async (req, res) => {
         couponCode: couponCode || "",
       },
     });
+    2000;
+    if (totalAmount >= 2000) {
+      await createNewCoupon(req.user._id);
+    }
+    res.status(200).json({ id: session.id, totalAmount: totalAmount / 100 });
   } catch (error) {
     console.log(error);
   }
