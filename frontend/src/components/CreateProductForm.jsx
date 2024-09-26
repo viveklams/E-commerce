@@ -25,7 +25,20 @@ const CreateProductForm = () => {
   const loading = false;
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log();
+    console.log(newProduct);
+  };
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setNewProduct({ ...newProduct, image: reader.result });
+      };
+
+      reader.readAsDataURL(file); //converts string to base 64 format.
+    }
   };
   return (
     <motion.div
@@ -140,7 +153,7 @@ const CreateProductForm = () => {
             id="image"
             className="sr-only"
             accept="image/*"
-            // onChange={handleImageChange}
+            onChange={handleImageChange}
           />
           <label
             htmlFor="image"
