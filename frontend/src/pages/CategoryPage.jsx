@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useProductStore } from "../stores/useProductStore";
 import { useParams } from "react-router-dom";
-import motion from "framer-motion";
+import { motion } from "framer-motion";
+import Productcard from "../components/Productcard";
 const CategoryPage = () => {
   const { fetchProductsByCategory, products } = useProductStore();
 
@@ -21,7 +22,26 @@ const CategoryPage = () => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-        ></motion.h1>
+        >
+          {category.charAt(0).toUpperCase() + category.slice(1)}
+        </motion.h1>
+
+        <motion.div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {products.length === 0 && (
+            <h2 className="text-3xl font-semibold text-gray-300 text-center col-span-full">
+              No products Found
+            </h2>
+          )}
+
+          {products?.map((product) => (
+            <Productcard key={product._id} product={product} />
+          ))}
+        </motion.div>
       </div>
     </div>
   );
