@@ -9,7 +9,7 @@ const CategoryPage = () => {
   const { category } = useParams();
 
   useEffect(() => {
-    fetchProductsByCategory("category");
+    fetchProductsByCategory(category);
   }, [fetchProductsByCategory, category]);
 
   console.log("products:", products);
@@ -32,7 +32,7 @@ const CategoryPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {products.length === 0 && (
+          {products?.length === 0 && (
             <h2 className="text-3xl font-semibold text-gray-300 text-center col-span-full">
               No products Found
             </h2>
