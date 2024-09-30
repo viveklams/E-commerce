@@ -2,7 +2,7 @@ import { create } from "zustand";
 import axios from "../lib/axios";
 
 import { toast } from "react-hot-toast";
-import { Percent } from "lucide-react";
+// import { Percent } from "lucide-react";
 
 export const useCartStore = create((set, get) => ({
   cart: [],
@@ -17,18 +17,20 @@ export const useCartStore = create((set, get) => ({
       get().calculateTotals();
     } catch (error) {
       set({ cart: [] });
-      toast.error(error.response.data.message || "An error occured");
+      toast.error(error.response.data.message || "An error occurred");
     }
   },
-
-  addtoCart: async (product) => {
+  clearCart: async () => {
+    set({ cart: [], coupon: null, total: 0, subtotal: 0 });
+  },
+  addToCart: async (product) => {
     try {
       await axios.post("/cart", { productId: product._id });
-      toast.success("Added to cart");
+      toast.success("Product added to cart");
 
       set((prevState) => {
         const existingItem = prevState.cart.find(
-          (item) => item.id === product._id
+          (item) => item._id === product._id
         );
         const newCart = existingItem
           ? prevState.cart.map((item) =>
@@ -41,7 +43,7 @@ export const useCartStore = create((set, get) => ({
       });
       get().calculateTotals();
     } catch (error) {
-      toast.error(error.response.data.message || "An error occured");
+      toast.error(error.response.data.message || "An error occurred");
     }
   },
 
