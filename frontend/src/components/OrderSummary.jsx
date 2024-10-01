@@ -1,8 +1,10 @@
 import { motion } from "framer-motion";
 import { useCartStore } from "../stores/useCartStore";
+import { Link } from "react-router-dom";
+import { MoveRight } from "lucide-react";
 
 const OrderSummary = () => {
-  const { total, subtotal, coupon, isCouponApplied } = useCartStore();
+  const { total = 0, subtotal = 0, coupon, isCouponApplied } = useCartStore();
 
   const savings = subtotal - total;
   const formattedSubtotal = subtotal.toFixed(2);
@@ -25,7 +27,7 @@ const OrderSummary = () => {
               Original price
             </dt>
             <dd className="text-base font-medium text-white">
-              ${formattedSubtotal}
+              ₹{formattedSubtotal}
             </dd>
           </dl>
 
@@ -33,12 +35,48 @@ const OrderSummary = () => {
             <dl className="flex items-center justify-between gap-4">
               <dt className="text-base font-normal text-gray-300">Savings</dt>
               <dd className="text-base font-medium text-emerald-400">
-                -${formattedSavings}
+                -₹{formattedSavings}
               </dd>
             </dl>
           )}
 
-          {coupon}
+          {coupon && isCouponApplied && (
+            <dl className="flex items-center justify-between gap-4">
+              <dt className="text-base font-normal text-gray-300">
+                Coupon ({coupon.code})
+              </dt>
+              <dd className="text-base font-medium text-emerald-400">
+                -{coupon.discountPercentage}%
+              </dd>
+            </dl>
+          )}
+
+          <dl className="flex items-center justify-between gap-4 border-t border-gray-600 pt-2">
+            <dt className="text-base font-bold text-white">Total</dt>
+            <dd className="text-base font-bold text-emerald-400">
+              ₹{formattedTotal}
+            </dd>
+          </dl>
+        </div>
+
+        <motion.button
+          className="flex w-full items-center justify-center rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-emerald-700 focus:outline-none focus:ring-4 focus:ring-emerald-300"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          // onClick={handlePayment}
+        >
+          Proceed to Checkout
+        </motion.button>
+
+        <div className="flex items-center justify-center gap-2">
+          <span className="text-sm font-normal text-gray-400">or</span>
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-sm font-medium text-emerald-400 underline hover:text-emerald-300 hover:no-underline"
+          >
+            Continue Shopping
+            <MoveRight size={16} />
+          </Link>
         </div>
       </div>
     </motion.div>
