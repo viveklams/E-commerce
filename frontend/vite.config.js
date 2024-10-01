@@ -10,5 +10,9 @@ export default defineConfig({
         target: "http://localhost:5000",
       },
     },
+    port: 3000, // Change this to your desired port
+  },
+  define: {
+    "process.env.APP_TITLE": JSON.stringify("Your Custom Title"), // Set your custom title here
   },
 });
