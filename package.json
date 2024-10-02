@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    	"build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -14,17 +14,17 @@
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "cloudinary": "^2.4.0",
+    "cloudinary": "^2.5.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
+    "express": "^4.21.0",
     "ioredis": "^5.4.1",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.6.1",
-    "stripe": "^16.10.0"
+    "mongoose": "^8.7.0",
+    "stripe": "^17.0.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.7"
   }
 }
