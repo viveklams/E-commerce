@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "../lib/axios";
 import toast from "react-hot-toast";
 import LoadingSpinner from "./LoadingSpinner";
-import Productcard from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 const PeopleAlsoBought = () => {
   const [recommendations, setRecommendations] = useState([]);
@@ -35,7 +35,7 @@ const PeopleAlsoBought = () => {
       </h3>
       <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 lg: grid-col-3">
         {recommendations.map((product) => (
-          <Productcard key={product._id} product={product} />
+          <ProductCard key={product._id} product={product} />
         ))}
       </div>
     </div>
