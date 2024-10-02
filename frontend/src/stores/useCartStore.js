@@ -1,14 +1,12 @@
 import { create } from "zustand";
 import axios from "../lib/axios";
-
 import { toast } from "react-hot-toast";
-// import { Percent } from "lucide-react";
 
 export const useCartStore = create((set, get) => ({
   cart: [],
   coupon: null,
   total: 0,
-  subTotal: 0,
+  subtotal: 0,
   isCouponApplied: false,
 
   getMyCoupon: async () => {
@@ -19,20 +17,20 @@ export const useCartStore = create((set, get) => ({
       console.error("Error fetching coupon:", error);
     }
   },
-
   applyCoupon: async (code) => {
     try {
       const response = await axios.post("/coupons/validate", { code });
       set({ coupon: response.data, isCouponApplied: true });
+      get().calculateTotals();
+      toast.success("Coupon applied successfully");
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to apply coupon");
     }
   },
-
   removeCoupon: () => {
     set({ coupon: null, isCouponApplied: false });
     get().calculateTotals();
-    toast.success("Coupon Removed");
+    toast.success("Coupon removed");
   },
 
   getCartItems: async () => {
@@ -71,21 +69,19 @@ export const useCartStore = create((set, get) => ({
       toast.error(error.response.data.message || "An error occurred");
     }
   },
-
   removeFromCart: async (productId) => {
     await axios.delete(`/cart`, { data: { productId } });
-    toast.success("Product removed from the cart");
     set((prevState) => ({
       cart: prevState.cart.filter((item) => item._id !== productId),
     }));
     get().calculateTotals();
   },
-
   updateQuantity: async (productId, quantity) => {
     if (quantity === 0) {
       get().removeFromCart(productId);
       return;
     }
+
     await axios.put(`/cart/${productId}`, { quantity });
     set((prevState) => ({
       cart: prevState.cart.map((item) =>
@@ -96,17 +92,17 @@ export const useCartStore = create((set, get) => ({
   },
   calculateTotals: () => {
     const { cart, coupon } = get();
-    const subTotal = cart.reduce(
+    const subtotal = cart.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0
     );
-    let total = subTotal;
+    let total = subtotal;
 
     if (coupon) {
-      const discount = subTotal * (coupon.discountPercentage / 100);
-      total = subTotal - discount;
+      const discount = subtotal * (coupon.discountPercentage / 100);
+      total = subtotal - discount;
     }
 
-    set({ subTotal, total }); //it always update the cart
+    set({ subtotal, total });
   },
 }));
